@@ -1,0 +1,19 @@
+{
+  "name": "todo-cli",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/yargs": "^17.0.32"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "bin": {
+    "todo-cli": "./index.ts"
+  },
+  "dependencies": {
+    "inquirer": "^9.2.13",
+    "yargs": "^17.7.2"
+  }
+}
