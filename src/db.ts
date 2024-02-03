@@ -3,6 +3,10 @@ import { Database } from 'bun:sqlite'
 const db = new Database('tododb.sqlite', { create: true })
 db.exec('PRAGMA journal_mode = WAL;')
 
+interface todos {
+  todo_id: number
+  content: string
+}
 const todo_table_query = db.prepare(`
 CREATE TABLE IF NOT EXISTS todo (
   todo_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -17,7 +21,7 @@ const create_new_todo = (todo: string): void => {
 
 const get_all_todos = (): string => {
   const query = db.query(`SELECT * FROM todo`)
-  const todos = query.all()
+  const todos = query.all() as todos[]
   const todoList = `${todos.map((todo) => todo.content).join('\ntodo: ')}`
   query.finalize()
   if (todoList === '') {
@@ -27,7 +31,7 @@ const get_all_todos = (): string => {
 
 const get_todos_for_options = (): string[] => {
   const query = db.query(`SELECT * FROM todo`)
-  const todos = query.all()
+  const todos = query.all() as todos[]
   query.finalize()
   return todos.map((todo) => `${todo.content} (id: ${todo.todo_id})`)
 }
