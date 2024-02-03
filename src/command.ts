@@ -20,6 +20,7 @@ yargs(hideBin(process.argv))
     create_todo_handler(todo)
   })
 
+  .command('list', 'List all todos', () => get_todos_handler())
   .command('delete', 'Delete a todo from the list', async () => {
     const options = await get_todos_for_options_handler()
     const { selectedTodo } = await inquirer.prompt([

@@ -19,8 +19,7 @@ const create_todo_handler = (todo: string) => {
 const get_todos_handler = () => {
   try {
     const todos = get_all_todos()
-    if (todos === '') console.log('No todos found')
-    else console.log(todos)
+    console.log(todos)
   } catch (e) {
     console.error(e)
     console.error('oops! something went wrong')
@@ -56,6 +55,7 @@ const delete_all_todos_handler = () => {
     console.error('oops! something went wrong')
   }
 }
+
 export {
   delete_all_todos_handler,
   create_todo_handler,

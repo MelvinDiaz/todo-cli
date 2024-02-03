@@ -1,6 +1,6 @@
 import { Database } from 'bun:sqlite'
 
-const db = new Database('../db.sqlite')
+const db = new Database('tododb.sqlite', { create: true })
 db.exec('PRAGMA journal_mode = WAL;')
 
 const todo_table_query = db.prepare(`
@@ -18,11 +18,11 @@ const create_new_todo = (todo: string): void => {
 const get_all_todos = (): string => {
   const query = db.query(`SELECT * FROM todo`)
   const todos = query.all()
-  const todo_list = `todo: ${todos
-    .map((todo) => todo.content)
-    .join('\ntodo: ')}`
+  const todoList = `${todos.map((todo) => todo.content).join('\ntodo: ')}`
   query.finalize()
-  return todo_list
+  if (todoList === '') {
+    return 'No todos found'
+  } else return `todo: ${todoList}`
 }
 
 const get_todos_for_options = (): string[] => {
