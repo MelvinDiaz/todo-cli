@@ -37,7 +37,14 @@ const delete_todo = (todo_id: number): void => {
   query.run(todo_id)
   query.finalize()
 }
+
+const delete_all_todos = (): void => {
+  const query = db.query(`DELETE  FROM todo`)
+  query.run()
+  query.finalize()
+}
 export {
+  delete_all_todos,
   create_new_todo,
   get_all_todos,
   todo_table_query,

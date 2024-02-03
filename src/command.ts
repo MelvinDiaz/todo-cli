@@ -5,6 +5,7 @@ import {
   get_todos_handler,
   delete_todo_handler,
   get_todos_for_options_handler,
+  delete_all_todos_handler,
 } from './handler'
 import inquirer from 'inquirer'
 
@@ -18,8 +19,6 @@ yargs(hideBin(process.argv))
     ])
     create_todo_handler(todo)
   })
-
-  .command('list', 'List all todos', () => get_todos_handler())
 
   .command('delete', 'Delete a todo from the list', async () => {
     const options = await get_todos_for_options_handler()
@@ -35,4 +34,16 @@ yargs(hideBin(process.argv))
     delete_todo_handler(todo_id)
   })
 
+  .command('delete-all', 'Delete all todos', async () => {
+    const { confirm } = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'confirm',
+        message: 'Are you sure you want to delete all todos?',
+      },
+    ])
+    if (confirm) {
+      delete_all_todos_handler()
+    } else console.log('No todos were deleted')
+  })
   .parse()
